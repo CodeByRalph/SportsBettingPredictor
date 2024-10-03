@@ -1,0 +1,22 @@
+# Web scraping
+beautifulsoup4==4.12.0
+lxml==4.9.3
+requests==2.31.0
+
+# Data manipulation
+pandas==2.0.3
+numpy==1.24.3
+
+# Machine learning and modeling
+scikit-learn==1.2.2
+xgboost==1.7.5
+
+# Data visualization (optional, for data visualization)
+matplotlib==3.7.1
+seaborn==0.12.2
+
+# Saving/loading machine learning models
+joblib==1.3.2
+
+# Optional: If you are using Jupyter notebooks for experimentation
+jupyterlab==3.6.3
