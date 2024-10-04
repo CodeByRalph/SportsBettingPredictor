@@ -107,21 +107,21 @@ def append_new_data(player_id, year):
         print(f"Saved new data for {year} directly.")
         return
     
-    # Compare the most recent game date in both datasets
-    if not existing_data.empty:
-        last_saved_game = existing_data.iloc[-1]['Date']
-        new_data_to_append = new_data[new_data['Date'] > last_saved_game]
+    # # Compare the most recent game date in both datasets
+    # if not existing_data.empty:
+    #     last_saved_game = existing_data.iloc[-1]['Date']
+    #     new_data_to_append = new_data[new_data['Date'] > last_saved_game]
         
-        # If there's new data, append it
-        if not new_data_to_append.empty:
-            updated_data = pd.concat([existing_data, new_data_to_append], ignore_index=True)
-            save_game_log_data(player_id, year, updated_data)
-            print(f"Appended new data for {year}.")
-        else:
-            print(f"No new data to append for {year}.")
-    else:
-        save_game_log_data(player_id, year, new_data)
-        print(f"Saved new data for {year}.")
+    #     # If there's new data, append it
+    #     if not new_data_to_append.empty:
+    #         updated_data = pd.concat([existing_data, new_data_to_append], ignore_index=True)
+    #         save_game_log_data(player_id, year, updated_data)
+    #         print(f"Appended new data for {year}.")
+    #     else:
+    #         print(f"No new data to append for {year}.")
+    # else:
+    #     save_game_log_data(player_id, year, new_data)
+    #     print(f"Saved new data for {year}.")
 
 def save_game_log_data(player_id, year, df):
     """
@@ -129,7 +129,7 @@ def save_game_log_data(player_id, year, df):
     """
     filepath = f"data/raw/player_{player_id}_{year}.csv"
     df.to_csv(filepath, index=False)
-    print(f"Saved data to {filepath}.")
+    print(f"Saved uncleaned data to {filepath}.")
 
 def fetch_multiple_logs(player_id, start_year, end_year):
     """
