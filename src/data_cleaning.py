@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 from src.data_fetching import load_existing_game_logs
 
 
@@ -49,10 +50,14 @@ def clean_data_for_model(player_id):
     df = df.dropna(subset=['Date'])
     
     # Remove @ or vs in OPP
-    df['OPP'] = df['OPP'].str.replace('vs', '').str.replace('@', '').str.strip()
+    df['OPP'] = df['OPP'].apply(lambda x: 1 if '@' not in x else 0)
 
     # replacing W with 1 and L with 0
     df['Result'] = df['Result'].apply(lambda x: 1 if 'W' in x else 0)
+
+     # Drop columns where all values are '-' or non-numeric values
+    df.replace('-', np.nan, inplace=True)
+    df = df.dropna(axis=1, how='all')
 
     df = df.sort_values(by='Date', ascending=True)
     df = df.reset_index(drop=True)
