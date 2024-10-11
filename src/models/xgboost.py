@@ -20,13 +20,16 @@ def train_xgboost(X_train, y_train):
     # Initialize XGBRegressor
     xgboost_model = XGBRegressor(random_state=42)
 
+    # Define TimeSeriesSplit for sequential data
+    tscv = TimeSeriesSplit(n_splits=5)
+
     # Set up RandomizedSearchCV
     random_search = RandomizedSearchCV(
         estimator=xgboost_model,
         param_distributions=param_dist,
-        n_iter=50,           # Number of parameter settings to sample
+        n_iter=500,           # Number of parameter settings to sample
         scoring='neg_mean_squared_error',  # Performance metric
-        cv=3,                # Cross-validation folds
+        cv=tscv,                # Cross-validation folds
         verbose=1,
         n_jobs=-1,           # Use all available CPU cores
         random_state=42
