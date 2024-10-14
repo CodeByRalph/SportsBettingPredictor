@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_player_game_log(player_id, year):
+def scrape_player_game_log(player_id, position, year):
     """
     Scrapes regular season game log data for a given player and year, separating passing and rushing stats.
     """
@@ -78,8 +78,7 @@ def scrape_player_game_log(player_id, year):
         game_logs.append(row_data)
     
     df = pd.DataFrame(game_logs)
-    # DEBUG LINE - Final DataFrame
-    #print(df)
+
     return df
 
 def load_existing_game_logs(player_id, year):
@@ -91,7 +90,7 @@ def load_existing_game_logs(player_id, year):
         return pd.read_csv(filepath)
     return None
 
-def append_new_data(player_id, year):
+def append_new_data(player_id, position, year):
     """
     Appends new data to the existing game log if there's new data available.
     """
@@ -99,7 +98,7 @@ def append_new_data(player_id, year):
     existing_data = load_existing_game_logs(player_id, year)
     
     # Scrape the latest game log data
-    new_data = scrape_player_game_log(player_id, year)
+    new_data = scrape_player_game_log(player_id, position, year)
     
     # If there is no existing data, save the new data directly
     if existing_data is None:
@@ -131,9 +130,9 @@ def save_game_log_data(player_id, year, df):
     df.to_csv(filepath, index=False)
     print(f"Saved uncleaned data to {filepath}.")
 
-def fetch_multiple_logs(player_id, start_year, end_year):
+def fetch_multiple_logs(player_id, position, start_year, end_year):
     """
     Gathers game logs for a player across multiple years and ensures data is up to date.
     """
     for year in range(start_year, end_year + 1):
-        append_new_data(player_id, year)
+        append_new_data(player_id, position, year)

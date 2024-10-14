@@ -26,10 +26,15 @@ def add_passing_yds_features(df):
     # Sack rate (SACK / ATT)
     #df['SACK_rate'] = df['SACK'] / df['ATT']
 
+    # Replace zeroes in CMP with a small constant
+    df['CMP'] = df['CMP'].replace(0, 1e-6)
     # Sack to completion ratio - high ratio = struggle under pressure
     df['SACK_to_CMP'] = df['SACK'] / df['CMP']
 
     # Pass-to-Rush Ratio
+    df['ATT'] = df['ATT'].replace(0, 1e-6)
+    # Replace zeroes in CAR with a small constant
+    df['CAR'] = df['CAR'].replace(0, 1e-6)
     df['log_Pass_to_Rush_Ratio'] = np.log1p(df['ATT'] / df['CAR'])
     df['Rushing_Impact'] = df['YDS2'] / df['ATT']
     df['log_Rushing_Impact'] = np.log1p(df['YDS2'] / df['ATT'])

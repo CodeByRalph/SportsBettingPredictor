@@ -5,9 +5,9 @@ import pandas as pd
 import os
 
 if __name__ == "__main__":
-    player_id = 3917315
+    player_id = 3128390
     try:
-        fetch_multiple_logs(player_id, 2019, 2024)
+        fetch_multiple_logs(player_id, 'rb', 2018, 2024)
         clean_data_for_model(player_id)
         test_model_performance(player_id, 'YDS')
     except Exception as e:

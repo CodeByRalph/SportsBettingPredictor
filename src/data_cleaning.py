@@ -37,6 +37,7 @@ def combine_game_logs(player_id, directory = 'data/raw'):
         combined_df = pd.concat(dataframes, ignore_index=True)
         # Reformatting Date
         combined_df['Date'] = pd.to_datetime(combined_df['Date'], errors='coerce')
+
         return combined_df
     else:
         print(f"No CSV files found for player ID {player_id}")
@@ -61,6 +62,6 @@ def clean_data_for_model(player_id):
 
     df = df.sort_values(by='Date', ascending=True)
     df = df.reset_index(drop=True)
-    #print(df)
+    # print(df)
 
     save_combined_logs(player_id, df)
